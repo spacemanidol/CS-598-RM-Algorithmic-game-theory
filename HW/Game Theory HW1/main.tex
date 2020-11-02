@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{CS 598RM: Algorithmic Game Theory HW1}
+\author{Daniel Campos}
+\date{September 25th  2020}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{alltt,fullpage,graphics,color,epsfig,amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{boxedminipage}
+\usepackage{algorithm,algpseudocode}
+
+
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\bb}{{\mathbf{b}}}
+\begin{document}
+\maketitle
+
+\section{Competitive Equilibrium}
+\subsection{Part A}
+Compute equilibrium prices and allocation for the following Fisher market.
+Show that the resulting allocation is Pareto optimal.
+Market with two agents $A = \{1, 2\}$, and two goods G = \{1, 2\}. Budgets of the agents
+are $B_1$ = 5, $B_2$ = 2, and their utility functions are $v_1(x_{11},x_{12})=3x_{11} +4x_{12}$ and $v_2(x_{21}, x_{22}) = x_{21} + 2x_{22}$
+\subsubsection{Answer}
+An equilibrium price for this fisher instance would have the cost of good 1($g_1$) be \$3 and have the cost of good 2($g_2$) be \$4 dollars. With these prices, agent 2($a_2$) will get $\frac{utility}{\$}$ of $\frac{1}{3}$ for $g_1$ and $\frac{2}{4}$ for $g_2$ and thus spend all their budget on $g_2$ demand $\frac{1}{2}$ of $g_2$. Agent 1($a_1$) will get a $\frac{utility}{\$}$ of $\frac{3}{3}$ from $g_1$ and $\frac{4}{4}$ for $g_2$ and thus not have a preference between goods. As a result $a_1$ will demand $\frac{1}{2}$ of $g_2$ and the entire supply of $g_1$. This allocation is Pareto optimal as no other allocation will increase the utility for $a_1$ or $a_2$. At the previously mentioned prices all other allocations will provide a lower utility for $a_2$.   
+\subsection{Part B}
+Given a fisher instance where budget of agent i is $B_i$ show that a 
+CE allocation satisfies: weighted envy-free,weighted proportional, weighted welfare maximizing allocation gives a CE. 
+\subsubsection{Envy Free}
+To be envy free for every agent $i$ they should prefer their bundle $x_i$ to any other bundle $x_k$.  In a fisher instance with different budgets each agent $i$ is maximizing their utility for for their budget $b$ the utility ($v_i(x_i)$) . In a CE allocation with varying, demand is equal to supply which means every agent $i$ is using their entire budget and that all goods available are purchased. This means that the sum of all bundles is the entire supply. Since agents chose bundles based on what maximizes their utility function we know that e the utility that $i$ receives from $x_i$ must be greater that any other bundle $x_k$ ($v_i(x_k)$) $k \in A$. Knowing that each agent is optimizing for their utility and supply and demand are matched we can then infer that each agent has chosen the bundle that maximizes their utility and as a result do not envy any other bundle. To expand this to varying budgets we need to weight each utility function $v_i(x_i)$ given its budget $b_i$ because varying budgets means we need to ensure that each agent does not envy the $\frac{utility_i}{\$}$ for any other bundle. A CE allocation still holds here because each agent will still chose its bucket to optimize its utility given its budget. Thus in a CE allocation each agent has chosen the most optimal bundle given its budget and is envy free of any other budget they could afford. We formalize this in equation \ref{eq:6}
+\begin{equation}
+\label{eq:6}
+\frac{v_i(x_i)}{B_i} \ge \frac{v_i(x_k)}{B_k} \forall k \in A
+\end{equation}
+\subsection{Weighted Proportional}
+Building on the previous section we know that a Fisher instance that is CE is envy free which by extension also means its proportional. By proportional we mean that the utility each agent gets from their chosen bundle is greater equal to the utility they would get if they got all the goods in the market divided by the actors in the market. We formalize this in equation \ref{eq:1} where $v_i$ represents the utility function, $G$ represents all goods, $n$ represents the amount of agents. \\
+\begin{equation} \label{eq:1}
+    v_i(x_i) \ge \frac{B_i}{B_k}\frac{v_i(G)}{n}
+\end{equation}
+Since we already showed that the fisher instance that has CE allocation is envy free we  formalize that with \ref{eq:2}. We simplify this to equation \ref{eq:3} and then equation \ref{eq:4}. Since we know that CE means entire supply is demanded, the sum of all bundles $x_k$ is $G$ which we use to simplify as equation \ref{eq:5}. When simplified equation \ref{eq:5} becomes equation 1 which proves that a CE allocation is proportional. 
+\begin{equation} \label{eq:2}
+    \frac{v_i(x_i)}{B_i} \ge \frac{v_i(x_k)}{B_k} \forall k \in A
+\end{equation}
+\begin{equation}
+\label{eq:3}
+\frac{v_i(x_i)}{B_i}\ge \sum_{k \in A} frac{v_i(x_k)}{B_k} 
+\end{equation}
+\begin{equation}
+\label{eq:4}
+v_i(x_i) \ge \frac{B_i}{B_k} v_i\sum_{k \in A}frac{v_i(x_k)}
+\end{equation}
+\begin{equation}
+\label{eq:5}
+v_i(x_i) \ge \frac{B_i}{B_k} v_i(G)
+\end{equation}
+\subsection{Weighted Nash Welfare maximizing allocation}
+Our goal to have a weighted Nash Welfare allocation is to ensure that each agent has the best allocation given its budget and prices. Since we know that a CE instance has completely demanded supply and each agent is choosing a bundle that which they don't envy any other bundle(weighted to account for budget) we can infer that each agent has selected a bundle that maximizes their utility. Since each agent has maximized their utility given their budget then a CE instance provides a Nash Welfare maximizing allocation.
+\section{Proportional response}
+For the corresponding bids to form a fixed point it would mean that the update function $f$ does not modify the bids $b*$ on any day after $t$. Since we know that a CE guarantees all agents are weighted envy free and that the instance is Pareto optimal(demand and supply completely met and all budgets spent) we know that for a CE market on day $t$ each agent $i$ has submitted bids which maximize its utility given its bid bundles and they do not envy the results of any other agents bids. Additionally we know a CE is the Weighted Nash Equilibrium maximum which means that this is the market which has optimized the utility for all agents. As a result this means that after day $t$ there is no function $f$ which can improve any agents utility and as a result there is no way to improve the bid which in turn would make $f(*b) = b*$. 
+\section{On the computation of CE}
+\subsection{Show Algorithm terminates in O(N)}
+The VY'20 Algorithm runs outer loop is one iteration of: raise prices for all goods in $g_i$, freeze price of goods of which a set goes tight and remove from active set, and raise the price of active goods until another set goes tight. This is performed between $a_i$ and $g_i$ until the CE prices are found. This means that the algorithm run no more than n loops which makes the entire program O(n). If the bounding of goods having a $v_{ij} \in \{0,1\}$  were not to exist then number of free zings would no longer be bounded by a polynomial in n.
+\subsection{Simply Bi Valued HZ instance}
+To simply a Bi Valued HZ instance we can take advantage of the VY'20 algorithm and of properties of a CE environment. By having a bi valued utility function we are essentially saying that for each good  an agent $a_i$ either gets a high ($b_i$) utility or low utility($a_i$) as we know that their utility $v_{ij}$ is either $a_i$ or $b_i$ and $0 \le a_i \le b_i$. Although utility values for $a_i$ and $b_i$ do not have to be the same for every agent $i$ we do know that for each agent $i$ will get higher utility $b_i$ or lower $a_i$ for an item. We then set each agents $b_i$ to 1 and their $a_i$ to 0 for all agents $i$  and run the same VY'20 algorithm. By doing so we produce a CE as each agent has been optimized to its highest utility distribution and the Nash Well fare Equilibrium is maximized.
+\section{Fair-division of a set of indivisible goods.}\
+\subsection{Show an example with additive valuations for which the envy-cycle procedure does not give an EFX allocation}
+Take the example with four goods $G = \{1,2,3,4\}$ and two agents $A = \{1,2\}$. $v_{11} = 10, v_{12} = 20, v_{13} = 20, v_{14} = 10, v_{21} = 10, v_{22}= 30, v_{23}= 30 v_{24} = 29$. We do not have an EFX allocation because no matter what bundle we assign $a_1$ if we remove any item from $a_2$ $a_1$ will still envy .
+\subsection{Show that an EFX allocation exists when agents have identical monotone valuation}
+Take for example the with three goods $G = \{1,2,3,\}$ and two agents $A = \{1,2\}$. Each agent values each of the goods equally. An example of a EFX allocation is $a_1$ is given goods $g_1$ and $g_2$ while $a_2$ is given $g_3$. $a_1$ does not envy $a_2$ and if we remove any of $a_1$'s assigned goods then $a_2$ does not envy them. 
+\subsection{Polynomial-time algorithm to obtain an EFX allocation when agents have identical additive valuations}
+\begin{algorithm}[H]
+\SetAlgoLined
+\State{\textbf{Input:}An instance of agents $N$, goods $G$, and valuations $V$ where agents have identical additive valuations}
+\State{\textbf{Output:}An Allocation A}
+ \State{Order goods in descending order of value, i.e. $v(g_1) \ge v(g_2) \ge ... v(g_n) > 0$}
+ \State{Set allocation A to all zeros}
+ \For{\texttt{$g_l$ in $G$}}
+    \State{set $i \gets arg min_{k \in N}v(A_k)$}
+    \State{$A_i \gets A_i \and g_l$}
+ \caption{EFX Allocation with identical additive valuations}
+\end{algorithm}
+Our algorithm is pretty simple. Since all agents share valuations we can just sort goods by their value. Then for each item in our sets of goods we find the agent who has the least valuation and assign the next good $g_l$ to them. 
+\subsection{Polynomial-time algorithm to obtain an EFX allocation when there are two agents with additive valuations}
+To show that EFX allocation exist we will fall back on the leximin++ solution. In the 'Almost Envy-Freeness with General Valuations' paper theorem 4.3 states that for two players with non identical valuations algorithm \ref{algo:3} returns a EFX allocation. This is true because for two players the first player will view the allocation as EFX regardless of bundle. Since Player 2 then selects from the player 1 created bundles the resulting allocation is EFX. Basically its the implementation of the biblical story mentioned at the beginning of the paper where Abraham makes two bundles he values equally and allows Lot to chose the bundle he values more. Note this is not my algorithm but it provides the EFX allocation for two agents with additive valuation in polynomial time.
+
+\begin{algorithm}[H]
+\label{algo:2}
+\Function{LEXIMIN++}{A,B,($v_1...v_n$)}
+\State{$X^A \gets $ ordering of players based on increasing utility.}
+\State{$X^B \gets $ ordering of players under B}
+\For{\texttt{$\alpha$ \in $n$}}
+\State{ $i \gets {X_\alpha}^A$}
+\State{ $j \gets {X_\alpha}^B$}
+\If{$v_i(A_i) \neq v_j(B_j)$ }
+\State{\texttt{return} $v_i(A_i) < v_j(B_j)$}
+\EndIf
+\If{$A_i \neq B_j$ }
+\State{\texttt{return} $A_i < B_j$}
+\EndIf
+\EndFor
+\State{\texttt{return} false}
+\EndFunction
+\end{algorithm}
+\begin{algorithm}[H]
+\label{algo:3}
+\Function{EFX on 2 Agents}{$M,v_1,v_2$}
+\State{$(A_1,A_2) \gets LEXIMIN++(2, M, v_1) $}
+\If{$v_2(A_1) \ge v_2(A_2)$}
+\State{\texttt{return $(A_2,A_1)$}}
+\Else
+\State{\texttt{return $(A_1,A_2)$}}
+\caption{EFX Allocation with two agents additive valuations}
+\end{algorithm}
+\section{MMS and Prop1}
+\subsection{Show that MMS allocation exists when n=2}
+Let us have a set of two agents $A$ and 4 goods $G$. $a_1$ has a utility array $v_1 = [7, 2, 6 ,10]$ and $a_2$ has a utility array $v_2= [4, 7, 7, 7]$. The bundle for $a_1 = \{1, 4 \}$ and the bundle for $a_2= \{2, 3\}$ as each agent receives their maximum utility bundle.
+\subsection{Show EF1 implies$\frac{1}{n-MMS}$}
+Assume an EF1 allocation $\alpha$, We know that EF1 means that each bundle of goods $\alpha_i$ there is a subset of items $g_i$ that $v_i(g_1)\ge v_i(\alpha_i \setminus g_i)$. If we sum this overall groups in $n$ we get $n \times v_i(g_1) \ge v_i(G\setminus (g_2 \cup ... \cup g_n)$). When $G$ is partitioned into N bundles there exists a bundle containing items not in $(g_2 \cup ... \cup g_n)$. Thus MMS is at most $v(G \setminus (g_2 \cup ... \cup g_n))$ which is at most $n \dot v_i(G_1)$ which implies the EF1 solution is at least $\frac{1}{N}MMS$.
+\subsection{Show an example where an MMS allocation is not EF1}
+Take the example with three agents $A$,6 goods $g$ with valuations $v_1 = [ 1,0,1,4,5,5], v_2=[1,0,0,3,3,4], v_3=[1,3,3,1,3,6]$ an MMS allocation is $a_1 = \{g_1, g_2, g_3, g_4\}, a_2 =\{g_5\}, a_3 = \{f\}$ which is MMS but $a_3$ envies $a_1$ even if you remove $g_2$ or  $g_3$
+\subsection{Show that envy-freeness up to one item (EF1) implies proportionality up to one item(Prop1), but Prop1 does not imply EF1}
+\subsubsection{EF1 satisfies Prop1.} Suppose $\alpha$ satisfies EF1. Consider an agent $i \in N$ and  $x= max_{j \in J\\\alpha_i} u_i(o)$ and  $y = -min_{o \in \alpha(i)} u_i()$. \\
+Since we know $\alpha$ satisfied EFI we know that if $i$ gets a bonus $b_i$ by removing a good where $b_i = max\{x, y, 0}$ the agent $i$'s updated utility $u_i(\alpha(i)) + b_i  \ge u_i(\alpha(j))$. This leads us to $n(u_i(\alpha(i)) + b_i) \ge \sum{j \in N} u_i(\alpha(j)) = u_i(O)$ which in turn implies $u_i(\alpha(i)) + b_i \ge \frac{u_i(O)}{n}$ which means EF1 means PROP1.
+\subsubsection{PROP1 Does Not imply EF1}
+Take the allocation $\alpha$ which we know to be Prop1 with 2 agents $A$ and 4 goods $G$ and utility functions$v_1 = [2,0,7,3], v_2 =[1,2 6,2]$ a prop1 allocation would be $a_1 = [g_1, g_3],a_2 = [g_2, g_4]$ Both bundles are prop1 but $a_2$ envies both $g_1$ and $g_3$
+\section{Max Nash Welfare w/ Indivisible Goods}
+Consider a fair-division instance with set $M$ of $m$ indivisible goods, and $n$ agents with additive valuations. Show that an allocation that maximizes the
+Nash welfare (MNW) over the set $\Pi(M)$ of feasible integral allocations, i.e., $\mbox{arg}\max_{(A_1,\dots,A_n)\in \Pi(M)} \displaystyle\Pi_{i=1}^n v_i(A_i)$,
+\subsection{is EF1 +PO}
+Assume $\alpha$ is a MNW allocation where $NW(\alpha) > 0 $. $\alpha$ is PO because if there existed an alternate $\alpha_{'}$ which increase the utility of an agent $i$ without deceasing the utility of another agent $j$ then there could be an increase to the NW which contradicts that $\alpha$ is a MNW allocation. Additionally, assume that $\alpha$ is not EF1 and by extension $i$ envies $j$ event after removing $g_k$ from $j$'s allocation. This means that in allocation $\alpha_{'}(i) = \alpha(i) + g_k$. If this condition were to exist then $NW(\alpha_{'}) > NW(\alpha))$ because $i$ utility could increase the MNW. Since $NW(\alpha) > NW(\alpha_{'})$ then there no envy for a single good for agent $A$ and thus is EF1.
+\subsection{may not be EFX}
+Take the example of three agents $A$, three goods $G$ and the utility functions $v_1 = [1, 0 ,0] , v_2 = [1, 0, 0], v_3[0,1,1]$. The nash welfare of any allocation is 0 and as a result the MNW is 0. Take the allocation $\{\{g_1, g_2,\}, \{\}, \{g_3}$ where $a_2$ receives an empty bundle. This allocation is not EFX because $a_2$ still envies $a_1$ after the removal of $g_2$.
+\subsection{Is EFX when Agents have identical valuations}
+Let allocation $\alpha$ be the MNW and as a result $\alpha$ is EF1 and PO. Let there be m good $G$ and n agents $A$. Base case when $ m \le n$ $\alpha$ is EFX because each agent receives at most one good and the removal of this good from their bundle makes them envy free. For cases $m > n$ we prove via contradiction. Assume $\alpha$ is not EFX and by extension $v_1(\alpha_1) < v_1(alpha_2 \setminus g_j)$ where $g_j \in \alpha_2$. Form an allocation $\alpha_{'}$ which is identical to $\alpha$ except $\alpha_{'1} = \alpha_1 \union g_j$ and $\alpha_{'2} = \alpha_2 \setminus g_j$. New $\alpha_{'}$ provides an EFX allocation and has also increased the utility for $a_1$ thus making it the MNW and conflicting with the statement $\alpha$ is MNW   
+\end{document}
